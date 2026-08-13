@@ -1,0 +1,321 @@
+---
+title: "Exploration B Notes"
+format: pdf
+editor: visual
+---
+
+# Vectors and Factors
+
+At its core, R is an *objected*-oriented computational and programming environment. This means everything in R is an object with different properties. In this Exploration we will learn more about *vectors*, which are the core fundamental objects used in R, and will learn about a special type of vector called a *factor*.
+
+Before getting too far into details about vectors, let's briefly discuss *data types*.
+
+## Data Types
+
+R can represent different types of data. The types include `double`, `integer`, `complex`, `logical`, `character`, and `raw`. These are the basic fundamental objects we can use in R and are referred to as the `atomic` values. In this class, we will mainly use the `double`, `character`, and `logical` data types:
+
+-   `double`: Real numbers (numbers which may contain decimal values). Doubles can use decimal (12.34) or scientific form (.1234e2). When using numbers this is the default type used.
+
+-   `logical`: `TRUE` or `FALSE` values. You can create a vector that contains `TRUE` or `FALSE` directly, or you can also create a logical value without explicitly writing `TRUE` or `FALSE` but instead writing something that evaluates to `TRUE` or `FALSE`. For example: `3 > 2` is equivalent to `TRUE` while `3 == 2` is equivalent to `FALSE`.
+
+-   `character`: Words or text, usually referred to as *strings*. A *string* is a sequence of characters that must be surrounded by double quotes or single quotes, i.e. `"Hello"` and `'Goodbye'`.
+
+## Vectors
+
+A vector in R is a 1-dimensional object. That is, it contains a sequence of *elements* in a particular order. As we saw in Exploration A, to create an atomic vector we use the concatenate function `c()`, where each element of the vector is separated by a comma. This function will always create an atomic vector.
+
+**An atomic vector only contains elements of the same data type**. If the function `c()` is given a mix of elements then it will convert these elements to be all of the same type according to a hierarchy of rules. The only exception to this is for `NA` values. The object `NA` is used to indicate missingness, or the lack of a value. The value `NA` can occur anywhere for all types of vectors.
+
+Below are two examples of vector creation. The first is a vector with three elements; the first element is a 2, the second is a 6, and third is a 5. The second is a character vector that has just a single element, the string `"a string of text"`. You'll notice that when creating a vector with a single element, you don't need to use the concatenate `c()` function.
+
+```{r}
+# vector with three elements
+v <- c(2,6,5)
+
+# vector with one element
+w <- "a string of text"
+```
+
+Let's review some of the features of vectors.
+
+### Combining Vectors
+
+The concatenate function `c()` can be used to create vectors, but can also be used to combine vectors.
+
+```{r}
+# creating two vectors
+v1 <- c(1,2,3)
+v2 <- c(4,5,6)
+
+# combining the two vectors
+v3 <- c(v1, v2)
+v3
+```
+
+### Vectorized Operations {#vecoperators}
+
+As we saw briefly in Exploration A, vectors can be used in arithmetic computations. For example, below you can see an example of adding and multiplying two vectors. If you run the code block, you should see that it performs the addition and multiplication element by element.
+
+```{r}
+# creating two vectors
+v1 <- c(2, 4, 6)
+v2 <- c(3, 5, 7)
+
+# adding two vectors
+v1 + v2
+
+# multiplying two vectors
+v1 * v2
+```
+
+You can also change every element of a vector by some constant number via the various arithmetic operations built into R. Below you can see examples of how to multiply every element in a vector by 5, divide every element by 3, and finally add 2 to every element and then multiply the resulting vector by 7.
+
+```{r}
+# multiply every element by 5
+5*v1
+
+# divide every element by 3
+v1/3
+
+# add 2 then multiply by 7
+(v1+2)*7
+```
+
+### Accessing Elements of a Vector {#index}
+
+Given a vector, you can perform operations with all of the elements in the vector. But you can also access individual elements of a vector by using an *index* in square brackets. An *index* is the location of an element in a vector. For example, the vector `v_dbl<- c(10, 11, 12)` has three elements; the number `10` has index is 1, the number `11` index is 2, and the number `12` has index 3. It's worth emphasizing that the first element is accessed using the index 1, not 0 - this is different than many other programming languages, where the first element is accessed using 0 (zero-based indexing).
+
+There are a number of other indexing techniques that may be helpful:
+
+-   A negative index shows every element except the indicated index. So `v_dbl[-1]` is the vector `v_dbl` without the first element.
+
+-   The concatenate function can be used to obtain two or more elements of a vector in any desired order. Here `v_dbl[c(3,2)]` returns the third and second elements (in that order) of the vector `v_dbl`.
+
+Some examples of the above techniques can be seen below.
+
+```{r}
+# creating a vector
+v_dbl <- c(10, 11, 12)
+
+# Only get the third element
+v_dbl[3]
+
+# Get all elements except the first one
+v_dbl[-1]
+
+# Get the third and second element (in that order)
+v_dbl[c(3,2)]
+```
+
+#### Named Vectors {#names}
+
+Elements in a vector can also be given names. One can use the names instead of numeric indices to access elements. When you give the values in a vector names, this produces a *named vector*. The two techniques we will use to add names to vectors are (1) adding names when creating the vector, or (2) adding names to a vector after it has been created using the `names()` function.
+
+To create a named vector using the first technique we use the `=` symbol where **the name is on the left of the equal sign, and the value being named is on the right**.
+
+```{r}
+# Creating a named vector of ages
+ages <- c(Anthony = 31, Maggie = 30, Shea = 2, Jack = 1)
+ages
+```
+
+Notice that when you display a named vector, **the names are displayed above the values in the vector.** You can then use the names to access elements from the vector. Notice that using this technique, you must use the `[]` brackets and `""` quotes around the name.
+
+```{r}
+# obtaining Maggie's age
+ages["Maggie"]
+```
+
+Note that you can still use numbers to index the vector if you want. For example;
+
+```{r}
+ages[2]
+```
+
+The second technique for assigning names allows us to turn an already created vector into a named vector using the `names()` function.
+
+```{r}
+# create an unnamed vector
+president <- c("Abraham", "Lincoln")
+
+# add names using names()
+names(president) <- c("first", "last")
+
+# displaying the named vector
+president
+```
+
+You can also use the `names()` function to see the list of names for a named vector.
+
+```{r}
+# To see the names of a vector and not the elements
+names(president)
+```
+
+If you want to remove the names of a named vector, redefine the vector you wish to remove the names of with the `unname()` function.
+
+```{r}
+# Remove names using unname()
+president <- unname(president)
+president
+```
+
+### Length
+
+To see how many elements are in a vector (named or otherwise), we can use the `length()` function.
+
+```{r}
+length(president)
+```
+
+## Factors
+
+Factor objects are a special type of vector. As with vectors, they are a 1-dimensional sequence of elements, but factors are primarily used for categorical data, and are technically a special form of an integer type vector.
+
+In real-world problems, you often encounter data that can be classified in categories. For example, suppose a survey was conducted on a group of seven individuals, who were asked to identify their hair color. We could create a factor to store their hair colors. The first step is to create a vector. **This is not yet a factor.**
+
+```{r}
+# Creating a character vector of hair colors
+hair <- c("Blonde", "Black", "Black", "Red", "Blonde", "Brown", "Black")
+```
+
+To turn this vector into a factor, you must use either the `factor()` or the `as.factor()` functions.
+
+```{r}
+# Creating a factor using the hair vector
+hair_fac <- factor(hair)
+hair_fac
+
+# Alternative method to create the same factor
+hair_fac <- as.factor(hair)
+hair_fac
+```
+
+### Levels
+
+You may have noticed in the previous code block that when we displayed the factor, it also displayed something called *levels*. Levels are one of the special properties of a factor object. For a given factor, R keeps track of all the distinct possible values in the factor, and each value is called a *level* of the associated factor. The `levels()` function is another way to show all the levels of a factor.
+
+```{r}
+levels(hair_fac)
+```
+
+If your factor contains only a subset of all the possible levels, then R will have an incomplete picture of the possible levels. Consider the following example of a vector consisting of directions. Notice that the obvious related value "South" is not included since there were no values of South in the factor.
+
+```{r}
+directions <- c("North", "West", "North", "East", "North", "West", "East")
+directions_fac <- factor(directions)
+directions_fac
+```
+
+However, in practice, it makes sense to have all the possible directions as levels of your factor. To add all the possible levels explicitly, you specify the `levels` argument of the function `factor()`, as shown in this example below.
+
+```{r}
+# Make sure all possible categories are listed using the levels argument
+directions_fac <- factor(directions,
+            levels = c("North", "East", "South", "West"))
+directions_fac
+```
+
+If you ever want to remove any unused levels, you can simply use the `droplevels()` function.
+
+```{r}
+# there are no ties in record
+record = c("win", "loss", "loss", "win", "loss", "win")
+
+f <- factor(record,
+           levels = c("loss", "tie", "win"))
+
+# this will remove "tie" from the levels since record doesn't contain any "tie"
+droplevels(f)
+```
+
+### Combining Factors
+
+Just as with vectors, the concatenate function `c()`can be used to combine factors.
+
+```{r}
+f1 <- factor(c(1,2,2,2,3))
+f2 <- factor(c(3,2,2,4))
+f3 <- c(f1, f2)
+f3
+```
+
+### Length
+
+As with a vector, we use the `length()` function to see how many elements are in a factor.
+
+```{r}
+length(f)
+```
+
+### Names
+
+Like standard vectors, we can also make named factors. We can either start with a named vector, or add names to a factor using the `names()` function just like we did in the standard vector method.
+
+```{r}
+# creating a named vector
+record_vec <- c(sally = "win", tom = "win", ed = "lost", jane = "tie")
+record <- factor(record_vec)
+record
+```
+
+### Accessing Elements
+
+We can also access elements of a factor object using the same standard techniques described for accessing elements in a vector Exploration B.
+
+```{r}
+# Obtain the first element
+record[1]
+
+# Obtain the fourth and second elements
+record[c(4, 2)]
+
+# Obtain the second element using its name
+record["tom"]
+```
+
+### The `table()` function
+
+When dealing with categorical data, as we do with factors, a very useful function is the `table()` function. The table function tabulates observations. In the example below, when we apply the `table()` function to a factor, it produces a *named vector* where the names are the levels of the factor and the values are the number of instances of that level in the factor. See the example below.
+
+```{r}
+table(hair)
+```
+
+Because the `table()` function produces a named vector, it has all of the features associated to a named vector, such as accessing the values in the table using numeric or name indices.
+
+```{r}
+# accessing the first element of the table
+table(hair)[1]
+
+# accessing the value with name "Red"
+table(hair)["Red"]
+```
+
+The `table()` function can also be used to tabulate two-way frequency tables. The following code creates a two-way frequency table showing how many people with each hair color own or don't own pets. Notice that two factors of the same length were created such that the first indices of each correspond to each other (first person is blonde and owns a pet), the second indices corresponds to each other (second person is black-haired and does not own a pet), and so on.
+
+```{r}
+hair <- c("Blonde", "Black", "Black", "Red", "Blonde", "Brown", "Black")
+own_pets <- c(TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE)
+
+hair <- factor(hair)
+own_pets <- factor(own_pets)
+
+
+# Two way table
+table(hair, own_pets)
+```
+
+Notice that the first vector you plug into `table()` becomes the rows and the second becomes the columns.
+
+## The `%in%` Operator
+
+The `%in%` operator is useful when working with vectors and factors. It allows you to check if a certain value is in a vector or factor. It returns `TRUE` if the specified value is in the vector or factor and `FALSE` otherwise.
+
+```{r}
+# returns TRUE
+"Red" %in% hair
+
+# returns FALSE
+"Purple" %in% hair
+```

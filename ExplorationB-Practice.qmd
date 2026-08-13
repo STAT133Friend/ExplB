@@ -1,0 +1,118 @@
+---
+title: "Exploration B - Practice"
+format: pdf
+editor: visual
+---
+
+```{r}
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 70), tidy = TRUE)
+```
+
+## Your turn!
+
+Try out the following problems, and then follow the instructions at the end to render and submit the document.
+
+1\. Create a named vector storing the number of siblings of at least 5 people. The vector should have the following properties.
+
+-   The **values** in the vector should be numbers representing the number of siblings for at least 5 people.
+
+-   The **names** in the vector should correspond to the names of the individuals whose sibling count is recorded.
+
+-   The vector should be stored with an appropriate variable name.
+
+-   After creating the vector, you should display it.
+
+```{r}
+
+```
+
+2\. Using the vector you created in the previous problem, demonstrate how to access one individual's sibling count in two ways: using numerical indices, and using the names as indices.
+
+```{r}
+
+```
+
+3\. Demonstrate how to access more than one element from your sibling count vector at one time. You will want to use the `c()` function inside of the `[]` brackets.
+
+```{r}
+
+```
+
+4\. Demonstrate the use of the `%in%` operator using your sibling count vector in three ways.
+
+-   Pick a number of siblings that is in the vector and see if an element with that ***value*** is in the vector (this should return `TRUE`).
+
+-   Choose one of the people whose sibling count is included in the vector. Check to see if an element with that ***name*** is in the vector (this should return `TRUE`).
+
+-   Next, pick a name that **isn't** in the vector and see if an element with that ***name*** is contained in the vector (this should return `FALSE`)
+
+*Hint:* Pay attention to the fact that the first one is concerned with the values of the elements, while the last two are concerned with checking the names of the elements.
+
+```{r}
+
+```
+
+5\. In *The Lord of the Rings*, a group of nine people set out on a quest together. This fellowship consists of Gandalf the wizard, Aragorn (a human), Legolas the elf, Gimli the dwarf, Boromir (another human), and four hobbits (Frodo, Sam, Merry and Pippin). Create a *named factor* with the following properties.
+
+-   You should store this factor with the variable name `fellowship`.
+-   The *named* factor should have the races of each person as the elements, and the names of each person as the names in the factor. (This means for example that you could access the race of the character Gimli using the following code: `fellowship["Gimli"]`).
+-   You should display the factor after you create it.
+-   You should also use the `levels()` function to display the levels. This should result in output that looks similar to the following: `"dwarf"  "elf"  "hobbit"  "human"  "wizard"`. *If you do not get this output, (for example if it says `NULL`), it is likely that you have not created a factor.*
+
+```{r}
+
+```
+
+6\. Use the `table()` function to display the counts of each of the levels in your `fellowship` factor.
+
+```{r}
+
+```
+
+7\. Using the `table()` function and some arithmetic operators, compute the combined total number of humans and wizards in the fellowship. (*Hint:* how can you access the number of humans and the number of wizards from the `table()` function?)
+
+Note: your final result may have the name/label "human" or "wizard" even if you have correctly added the two values together. This is because when combining named objects, R will produce another named object with one of the names of the two named objects that were combined. (If this really bothers you, you can use the `unname()` function to get rid of the names in the vector containing the sum.)
+
+```{r}
+
+```
+
+8\. Display the proportion of the fellowship that is made of each type of race. That is, you should end up with the proportions 1/9=0.1111 for dwarves, 1/9=0.1111 for elves, 4/9=0.4444 for hobbits, 2/9=0.2222 for humans, and 1/9=0.1111 for wizards.
+
+-   You may not directly use any numbers. So for example, at no point should you be directly dividing anything by the number `9`.
+
+-   You must complete this task in one line of code.
+
+-   *Hint:* `table()` gives you a *named vector* with the counts for each race, and we can apply computations to every element of a vector all at once. Try dividing this `table()` vector by the total number of people in the fellowship. What function will give you the total number of people in the fellowship, or in other words, what function will give you the *total number of elements in the* `fellowship` *factor?*
+
+```{r}
+
+```
+
+9\. Of the members of the fellowship, Gandalf, Aragorn, Boromir, and Gimili all have facial hair. Create a vector called `facial_hair` of logical values where `TRUE` means the person has facial hair and `FALSE` means they do not. Make sure members of the fellowship are in the same order as in the `fellowship` vector. Create a two-way table that compares the races and the facial hair status of everyone in the fellowship. (That means we want a table that shows how many individuals of each race in the fellowship has a beard).
+
+```{r}
+
+```
+
+10\. What happens if you create a factor and define the levels, but you leave out one of the possible values from your set of levels? For example, in the factor below, one of the values in the factor is "banana", but I have not included "banana" in my list of levels. Run the following code and describe what happens in the space below the code block.
+
+```{r}
+fruits <- factor(c("apple", "banana", "peach", "apple", "apple"),
+                 levels = c("apple", "peach"))
+fruits
+```
+
+***Your answer:***
+
+**Rendering Instructions**
+
+a.  Make sure that your file does not have any errors in it, and that it is self-contained! If it contains errors or is not self-contained, the document will not render.
+
+b.  Towards the top left of the RStudio window, you will see a blue arrow and the word "**Render**". Click this. You will see a lot of text show up in the **Background Jobs** pane below. Wait until this text stops.
+
+c.  Once the rendering is complete, you will see a new pdf file in the **"Files"** pane in the lower right pane of RStudio.
+
+d.  Locate the document you want to download and click the check box next to the file name, then select the "**More**" option from the top of the "**Files**"pane (blue gear icon), and then select "**Export**" and then "**Download**".
+
+e.  The file should be downloaded to your downloads folder. You should now be able to go into **Canvas** and upload the pdf and submit it.
